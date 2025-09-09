@@ -3,14 +3,16 @@ import { Mail, ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import axios from 'axios';
+import React from 'react';
+import { API } from './t1';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const NewsletterSignup = ({ source = "unknown", variant = "default", className = "" }) => {
+const LeadForm = ({ source = "unknown", variant = "default", className = "" }) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -21,16 +23,27 @@ const NewsletterSignup = ({ source = "unknown", variant = "default", className =
     setError('');
 
     try {
-      await axios.post(`${API}/emails/subscribe`, {
+      // 1. Envoie au backend → crée un lead + ajoute à la newsletter
+      await axios.post(`${API}/leads`, {
         email: email.trim(),
         source,
-        interests: ['tiktok', 'instagram', 'youtube']
+        interests: ['tiktok', 'instagram', 'youtube'], // libre d’adapter
+        interest_level: "high"
       });
 
-      setIsSubscribed(true);
+      // 2. Push event GTM pour GA4 / Meta Pixel
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'lead_submitted',
+        email: email.trim(),
+        source,
+        timestamp: new Date().toISOString()
+      });
+
+      setIsSubmitted(true);
       setEmail('');
 
-      // Track analytics
+        // Track analytics
       try {
         await axios.post(`${API}/analytics/track`, {
           event_type: 'newsletter_signup',
@@ -43,7 +56,7 @@ const NewsletterSignup = ({ source = "unknown", variant = "default", className =
       }
 
     } catch (error) {
-      console.error('Newsletter signup error:', error);
+      console.error('Lead form error:', error);
       if (error.response?.status === 422) {
         setError('Email invalide. Veuillez vérifier votre saisie.');
       } else {
@@ -54,7 +67,8 @@ const NewsletterSignup = ({ source = "unknown", variant = "default", className =
     }
   };
 
-  if (isSubscribed) {
+  // ✅ Message de succès
+  if (isSubmitted) {
     return (
       <div className={`bg-green-50 border border-green-200 rounded-2xl p-6 text-center ${className}`}>
         <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
@@ -68,6 +82,7 @@ const NewsletterSignup = ({ source = "unknown", variant = "default", className =
     );
   }
 
+  // ✅ Variante "hero"
   if (variant === "hero") {
     return (
       <div className={`bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 ${className}`}>
@@ -112,6 +127,7 @@ const NewsletterSignup = ({ source = "unknown", variant = "default", className =
     );
   }
 
+  // ✅ Variante par défaut
   return (
     <div className={`bg-gradient-to-r from-pink-50 to-blue-50 rounded-2xl p-6 border border-pink-200/50 ${className}`}>
       <div className="text-center mb-4">
@@ -154,4 +170,4 @@ const NewsletterSignup = ({ source = "unknown", variant = "default", className =
   );
 };
 
-export default NewsletterSignup;
+export default LeadForm;
