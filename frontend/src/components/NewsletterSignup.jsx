@@ -3,7 +3,6 @@ import { Mail, ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import axios from 'axios';
-import React from 'react';
 import { API } from './t1';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
