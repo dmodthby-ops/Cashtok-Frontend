@@ -1,18 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
-
 
 const LeadForm = ({ source = "unknown", variant = "default", className = "" }) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
+
+  // Gestion du token de confirmation via query param
+  const location = useLocation();
+  const token = new URLSearchParams(location.search).get('token');
+
+  useEffect(() => {
+    if (!token) return;
+
+    const confirmEmail = async () => {
+      try {
+        const res = await axios.get(`${API}/emails/confirm/${token}`);
+        const subscriber = res.data;
+
+        // Push GTM event
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "email_confirmed",
+          email: subscriber.email,
+          source: subscriber.source,
+          interests: subscriber.interests
+        });
+
+        setIsSubmitted(true);
+      } catch (err) {
+        console.error("Confirmation échouée", err);
+        setError("Le lien de confirmation est invalide ou expiré.");
+      }
+    };
+
+    confirmEmail();
+  }, [token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,15 +53,15 @@ const LeadForm = ({ source = "unknown", variant = "default", className = "" }) =
     setError('');
 
     try {
-      // 1. Envoie au backend → crée un lead + ajoute à la newsletter
+      // 1. Crée lead + newsletter
       await axios.post(`${API}/leads`, {
         email: email.trim(),
         source,
-        interests: ['tiktok', 'instagram', 'youtube'], // libre d’adapter
+        interests: ['tiktok', 'instagram', 'youtube'],
         interest_level: "high"
       });
 
-      // 2. Push event GTM pour GA4 / Meta Pixel
+      // 2. Push lead_submitted
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: "lead_submitted",
@@ -39,11 +70,10 @@ const LeadForm = ({ source = "unknown", variant = "default", className = "" }) =
         interests: ['tiktok', 'instagram', 'youtube']
       });
 
-
       setIsSubmitted(true);
       setEmail('');
 
-        // Track analytics
+      // Track analytics
       try {
         await axios.post(`${API}/analytics/track`, {
           event_type: 'newsletter_signup',
@@ -67,13 +97,13 @@ const LeadForm = ({ source = "unknown", variant = "default", className = "" }) =
     }
   };
 
-  // ✅ Message de succès
+  // ✅ Message de succès (soumission ou confirmation)
   if (isSubmitted) {
     return (
       <div className={`bg-green-50 border border-green-200 rounded-2xl p-6 text-center ${className}`}>
         <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
         <h3 className="text-xl font-bold text-green-800 mb-2">
-          Inscription confirmée ! 🎉
+          {token ? "Inscription confirmée !" : "Inscription réussie !"} 🎉
         </h3>
         <p className="text-green-700">
           Vous recevrez nos meilleures stratégies directement dans votre boîte mail.
