@@ -34,10 +34,11 @@ const LeadForm = ({ source = "unknown", variant = "default", className = "" }) =
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: "lead_submitted",
-        email: data.email,
-        source: data.source,
-        interests: data.interests
+        email: email.trim(),
+        source: source,
+        interests: ['tiktok', 'instagram', 'youtube']
       });
+
 
       setIsSubmitted(true);
       setEmail('');
