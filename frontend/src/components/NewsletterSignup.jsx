@@ -34,10 +34,10 @@ const LeadForm = ({ source = "unknown", variant = "default", className = "" }) =
       // 2. Push event GTM pour GA4 / Meta Pixel
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
-        event: 'lead_submitted',
-        email: email.trim(),
-        source,
-        timestamp: new Date().toISOString()
+        event: "lead_submitted",
+        email: data.email,
+        source: data.source,
+        interests: data.interests
       });
 
       setIsSubmitted(true);
