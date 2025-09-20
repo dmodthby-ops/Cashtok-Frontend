@@ -4,9 +4,19 @@ import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 
 const OffersSection = () => {
-  const handlePayment = (offer, price) => {
-    // Mock payment redirect - would integrate with Stripe/PayPal
-    alert(`Redirection vers le paiement pour l'offre ${offer} à ${price}€`);
+  // 👉 Mets ici tes vrais liens de paiement générés depuis Systeme.io
+  const paymentLinks = {
+    Formation: "https://cash-system.systeme.io/7d04a006", // remplace par ton vrai lien
+    Premium: "https://cash-system.systeme.io/1d81f8f5", // remplace par ton vrai lien
+  };
+
+  const handlePayment = (offer) => {
+    // Redirection vers Systeme.io selon l'offre choisie
+    if (paymentLinks[offer]) {
+      window.location.href = paymentLinks[offer];
+    } else {
+      alert("Lien de paiement introuvable pour cette offre.");
+    }
   };
 
   return (
@@ -18,12 +28,12 @@ const OffersSection = () => {
             <Gift className="w-4 h-4 text-pink-500" />
             <span className="text-sm font-medium text-gray-700">Offres Limitées</span>
           </div>
-          
+
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Choisissez Votre
             <span className="bg-gradient-to-r from-pink-600 to-blue-600 bg-clip-text text-transparent"> Transformation</span>
           </h2>
-          
+
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Deux formules pour démarrer votre réussite sur les réseaux sociaux. 
             Profitez de nos prix de lancement exceptionnels !
@@ -38,16 +48,16 @@ const OffersSection = () => {
                 Populaire
               </div>
             </div>
-            
+
             <CardHeader className="text-center pb-4">
               <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-red-100 rounded-2xl mx-auto mb-4 flex items-center justify-center">
                 <Star className="w-8 h-8 text-pink-600" />
               </div>
-              
+
               <CardTitle className="text-2xl font-bold text-gray-900 mb-2">
                 Formation CASHTOK
               </CardTitle>
-              
+
               <div className="space-y-2">
                 <div className="flex items-center justify-center space-x-2">
                   <span className="text-3xl font-bold text-gray-900">97€</span>
@@ -100,7 +110,7 @@ const OffersSection = () => {
               </div>
 
               <Button 
-                onClick={() => handlePayment('Formation', 97)}
+                onClick={() => handlePayment('Formation')}
                 className="w-full bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white py-4 rounded-full text-lg font-semibold transform hover:scale-105 transition-all shadow-lg hover:shadow-xl group"
               >
                 Je m'inscris à 97€
@@ -123,16 +133,16 @@ const OffersSection = () => {
                 <span>Premium</span>
               </div>
             </div>
-            
+
             <CardHeader className="text-center pb-4">
               <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl mx-auto mb-4 flex items-center justify-center">
                 <Crown className="w-8 h-8 text-blue-600" />
               </div>
-              
+
               <CardTitle className="text-2xl font-bold text-gray-900 mb-2">
                 Pack Premium Complet
               </CardTitle>
-              
+
               <div className="space-y-2">
                 <div className="flex items-center justify-center space-x-2">
                   <span className="text-3xl font-bold text-gray-900">297€</span>
@@ -192,7 +202,7 @@ const OffersSection = () => {
               </div>
 
               <Button 
-                onClick={() => handlePayment('Premium', 297)}
+                onClick={() => handlePayment('Premium')}
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 rounded-full text-lg font-semibold transform hover:scale-105 transition-all shadow-lg hover:shadow-xl group"
               >
                 Je veux l'offre complète à 297€
