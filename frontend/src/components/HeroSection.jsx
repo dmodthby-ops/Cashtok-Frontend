@@ -1,4 +1,3 @@
-import React from "react";
 import React, { useState, useEffect } from 'react';
 import { Play, Star, Users, TrendingUp, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
