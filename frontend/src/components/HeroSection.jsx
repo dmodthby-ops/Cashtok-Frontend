@@ -1,7 +1,9 @@
+import React from "react";
 import React, { useState, useEffect } from 'react';
 import { Play, Star, Users, TrendingUp, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { heroImages } from '../mock';
+import { FaTiktok, FaInstagram, FaYoutube } from "react-icons/fa";
 
 const HeroSection = () => {
   const [currentStat, setCurrentStat] = useState(0);
@@ -42,7 +44,7 @@ const HeroSection = () => {
             {/* Badge */}
             <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-pink-100 to-blue-100 px-4 py-2 rounded-full border border-pink-200/50">
               <Star className="w-4 h-4 text-yellow-500 fill-current" />
-              <span className="text-sm font-medium text-gray-700">Formation #1 en France</span>
+              <span className="text-sm font-medium text-gray-700">Formation #1 au Monde</span>
             </div>
 
             {/* Main Headline */}
@@ -62,23 +64,22 @@ const HeroSection = () => {
               </h1>
               
               {/* Platform Logos */}
-              <div className="flex items-center space-x-6 py-4">
+              <div className="flex items-center justify-center space-x-6 py-8">
+                {/* TikTok */}
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
-                    <span className="text-white text-xs font-bold">TT</span>
-                  </div>
+                  <FaTiktok className="w-8 h-8 text-black" />
                   <span className="text-sm text-gray-600">TikTok</span>
                 </div>
+
+                {/* Instagram */}
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white text-xs font-bold">IG</span>
-                  </div>
+                  <FaInstagram className="w-8 h-8 text-pink-600" />
                   <span className="text-sm text-gray-600">Instagram</span>
                 </div>
+
+                {/* YouTube */}
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
-                    <Play className="w-4 h-4 text-white fill-current" />
-                  </div>
+                  <FaYoutube className="w-8 h-8 text-red-600" />
                   <span className="text-sm text-gray-600">YouTube</span>
                 </div>
               </div>
