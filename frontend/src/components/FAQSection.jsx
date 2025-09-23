@@ -72,7 +72,7 @@ const FAQSection = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="bg-white hover:bg-gray-50 text-gray-700 px-6 py-3 rounded-full font-semibold border border-gray-200 hover:border-gray-300 transition-all transform hover:scale-105">
-                  📧 support@cashtok.com
+                  📧 cashtoksystem@gmail.com
                 </button>
                 <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 py-3 rounded-full font-semibold transform hover:scale-105 transition-all shadow-lg hover:shadow-xl">
                   💬 Chat en Direct
