@@ -22,7 +22,7 @@ const Footer = () => {
             </div>
             
             <p className="text-gray-400 leading-relaxed">
-              La formation #1 en France pour monétiser TikTok, Instagram et YouTube. 
+              La formation #1 au Monde pour monétiser TikTok, Instagram et YouTube. 
               Transformez votre passion en revenus réguliers.
             </p>
             
@@ -107,8 +107,8 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-pink-500" />
-                <a href="mailto:support@cashtok.com" className="text-gray-400 hover:text-pink-400 transition-colors">
-                  support@cashtok.com
+                <a href="mailto:cashtoksystem@gmail.com" className="text-gray-400 hover:text-pink-400 transition-colors">
+                  cashtoksystem@gmail.com
                 </a>
               </div>
               
@@ -129,7 +129,7 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-red-500 mt-1" />
                 <div className="text-gray-400">
-                  <div>Paris, France</div>
+                  <div>Monaco</div>
                   <div className="text-sm">Support en français</div>
                 </div>
               </div>
