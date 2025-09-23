@@ -107,7 +107,7 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-pink-500" />
-                <a href="mailto:cashtoksystem@gmail.com" className="text-gray-400 hover:text-pink-400 transition-colors">
+                <a href="mailto:support@cashtok.com" className="text-gray-400 hover:text-pink-400 transition-colors">
                   cashtoksystem@gmail.com
                 </a>
               </div>
@@ -122,7 +122,7 @@ const Footer = () => {
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-green-500" />
                 <span className="text-gray-400">
-                  +33 1 23 45 67 89
+                   
                 </span>
               </div>
               
